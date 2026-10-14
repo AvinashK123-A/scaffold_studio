@@ -1,0 +1,47 @@
+name: scaffold_studio
+description: >-
+  Responsive app shell, adaptive navigation, configurable app bars,
+  typography with bundled Roboto, and common widgets for Flutter.
+version: 0.1.0
+# homepage / repository / issue_tracker are intentionally omitted until a
+# public repository exists. Add them before publishing (see README).
+
+topics:
+  - ui
+  - widget
+  - responsive
+  - navigation
+  - theme
+
+environment:
+  sdk: ^3.10.0
+  flutter: ">=3.38.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  # Fonts declared here are bundled into every app that depends on this
+  # package. They are registered under the family name
+  # `packages/scaffold_studio/Roboto`, so apps never need to declare them.
+  # License: Apache-2.0, see assets/fonts/roboto/LICENSE.txt and LICENSE.
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/roboto/Roboto-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+          weight: 700

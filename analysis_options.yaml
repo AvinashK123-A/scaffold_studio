@@ -1,0 +1,57 @@
+# Static analysis for scaffold_studio.
+#
+# Builds on the recommended Flutter lints and adds the stricter rules that
+# matter for a published package: documented public APIs, explicit types,
+# no implicit dynamic, and consistent formatting of imports and constructors.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    missing_required_param: error
+    missing_return: error
+  exclude:
+    - .original_app_template/**
+    - build/**
+
+linter:
+  rules:
+    - always_declare_return_types
+    - annotate_overrides
+    - avoid_dynamic_calls
+    - avoid_print
+    - avoid_redundant_argument_values
+    - avoid_returning_null_for_void
+    - avoid_unused_constructor_parameters
+    - cancel_subscriptions
+    - cascade_invocations
+    - comment_references
+    - directives_ordering
+    - literal_only_boolean_expressions
+    - no_adjacent_strings_in_list
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_fields
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_relative_imports
+    - prefer_single_quotes
+    - public_member_api_docs
+    - sort_child_properties_last
+    - sort_constructors_first
+    - sort_unnamed_constructors_first
+    - test_types_in_equals
+    - throw_in_finally
+    - type_annotate_public_apis
+    - unawaited_futures
+    - unnecessary_await_in_return
+    - unnecessary_lambdas
+    - unnecessary_null_aware_assignments
+    - unnecessary_parenthesis
+    - unnecessary_statements
+    - use_named_constants
+    - use_super_parameters

@@ -1,0 +1,25 @@
+name: scaffold_studio_example
+description: Showcase app for the scaffold_studio package.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # The consuming app only depends on the package. It does not declare the
+  # package's bundled fonts.
+  scaffold_studio:
+    path: ../
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
