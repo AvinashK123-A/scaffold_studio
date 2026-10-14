@@ -3,8 +3,8 @@ description: >-
   Responsive app shell, adaptive navigation, configurable app bars,
   typography with bundled Roboto, and common widgets for Flutter.
 version: 0.1.0
-# homepage / repository / issue_tracker are intentionally omitted until a
-# public repository exists. Add them before publishing (see README).
+repository: https://github.com/AvinashK123-A/scaffold_studio
+issue_tracker: https://github.com/AvinashK123-A/scaffold_studio/issues
 
 topics:
   - ui

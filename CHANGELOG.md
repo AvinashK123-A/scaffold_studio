@@ -1,6 +1,6 @@
 ## 0.1.0
 
-Initial pre-release. Not yet published to pub.dev.
+Initial release.
 
 - `ScaffoldStudioApp` and `ScaffoldStudioApp.router`: `MaterialApp` wrappers
   that build themes from `StudioTheme`, `StudioFont` and `StudioTypography`
