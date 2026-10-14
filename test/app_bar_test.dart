@@ -89,7 +89,7 @@ void main() {
         _host(
           const StudioAppBar(
             style: StudioAppBarStyle.profile,
-            titleText: 'Hi Avinash',
+            titleText: 'Hi Alex',
             subtitleText: 'Good morning',
             profile: CircleAvatar(key: Key('avatar')),
           ),
@@ -97,7 +97,7 @@ void main() {
       );
       expect(
         tester.getCenter(find.byKey(const Key('avatar'))).dx,
-        lessThan(tester.getTopLeft(find.text('Hi Avinash')).dx),
+        lessThan(tester.getTopLeft(find.text('Hi Alex')).dx),
       );
     });
 
@@ -116,7 +116,7 @@ void main() {
                 CircleAvatar(child: Icon(Icons.person)),
                 SizedBox(width: 8),
                 Flexible(
-                  child: Text('Avinash Reddy', overflow: TextOverflow.ellipsis),
+                  child: Text('Alex Johnson', overflow: TextOverflow.ellipsis),
                 ),
               ],
             ),
@@ -127,7 +127,7 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(
         tester.getTopLeft(find.text('Dashboard')).dx,
-        greaterThanOrEqualTo(tester.getTopRight(find.text('Avinash Reddy')).dx),
+        greaterThanOrEqualTo(tester.getTopRight(find.text('Alex Johnson')).dx),
       );
     });
   });

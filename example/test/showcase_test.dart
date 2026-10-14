@@ -205,10 +205,10 @@ void main() {
       await selectDestination(tester, 'Widgets');
       final Finder nameField = find.widgetWithText(TextField, 'Name');
       await tester.ensureVisible(nameField);
-      await tester.enterText(nameField, 'Avinash');
+      await tester.enterText(nameField, 'Alex');
       await selectDestination(tester, 'Settings');
       await selectDestination(tester, 'Widgets');
-      expect(find.text('Avinash'), findsOneWidget);
+      expect(find.text('Alex'), findsOneWidget);
     });
 
     testWidgets('the floating action button opens settings', (
@@ -498,7 +498,7 @@ void main() {
           tester,
           const AppBarDemoPage(style: StudioAppBarStyle.flexible),
         );
-        expect(find.text('Avinash Reddy'), findsOneWidget);
+        expect(find.text('Alex Johnson'), findsOneWidget);
         expect(
           find.text('Invite'),
           size == desktop ? findsOneWidget : findsNothing,

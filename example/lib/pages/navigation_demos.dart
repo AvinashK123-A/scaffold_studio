@@ -91,9 +91,7 @@ class _DemoNavHeader extends StatelessWidget {
         children: <Widget>[
           DemoAvatar(radius: 20),
           SizedBox(width: 12),
-          Expanded(
-            child: CommonHeaderText('Avinash', fontSize: 16, maxLines: 1),
-          ),
+          Expanded(child: CommonHeaderText('Alex', fontSize: 16, maxLines: 1)),
         ],
       ),
     );
@@ -229,7 +227,7 @@ class _FixedNavigationDemoState extends State<FixedNavigationDemo> {
         sidebarHeader: const _DemoNavHeader(),
         sidebarFooter: const Padding(
           padding: EdgeInsets.fromLTRB(28, 8, 16, 16),
-          child: CommonLabelText('Signed in as Avinash', maxLines: 2),
+          child: CommonLabelText('Signed in as Alex', maxLines: 2),
         ),
         sidebarWidth: (width * 0.6).clamp(160.0, 280.0),
       ),

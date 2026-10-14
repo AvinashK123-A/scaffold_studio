@@ -210,7 +210,7 @@ class _AppBarDemoPageState extends State<AppBarDemoPage> {
         return StudioAppBar(
           style: StudioAppBarStyle.profile,
           profile: const DemoAvatar(radius: 20),
-          titleText: _title('Good morning, Avinash'),
+          titleText: _title('Good morning, Alex'),
           subtitleText: _notifications == 0
               ? 'You are all caught up'
               : 'You have $_notifications new notifications',
@@ -441,7 +441,7 @@ class _ContactLeading extends StatelessWidget {
         ),
         SizedBox(width: 8),
         Flexible(
-          child: CommonHeaderText('Avinash Reddy', fontSize: 16, maxLines: 1),
+          child: CommonHeaderText('Alex Johnson', fontSize: 16, maxLines: 1),
         ),
       ],
     );

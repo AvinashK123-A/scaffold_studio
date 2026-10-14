@@ -40,7 +40,7 @@ class TypographyPage extends StatelessWidget {
               'CommonHeaderText uses a semibold titleLarge, is announced as '
               'a heading and ellipsizes after maxLines.',
           child: CommonHeaderText(
-            'Hi Avinash, how are you?',
+            'Hi Alex, how are you?',
             fontSize: 20,
             fontWeight: FontWeight.w600,
             maxLines: 2,

@@ -32,7 +32,7 @@ void main() {
       await pumpStudio(
         tester,
         const CommonHeaderText(
-          'Hi Avinash, how are you?',
+          'Hi Alex, how are you?',
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: Colors.black,
@@ -43,9 +43,7 @@ void main() {
           textAlign: TextAlign.center,
         ),
       );
-      final Text text = tester.widget<Text>(
-        find.text('Hi Avinash, how are you?'),
-      );
+      final Text text = tester.widget<Text>(find.text('Hi Alex, how are you?'));
       expect(text.style!.fontSize, 20);
       expect(text.style!.fontWeight, FontWeight.w600);
       expect(text.style!.color, Colors.black);
