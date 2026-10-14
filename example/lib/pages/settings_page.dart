@@ -128,7 +128,7 @@ class SettingsPage extends StatelessWidget {
             spacing: 8,
             children: <Widget>[
               const CommonHeaderText(
-                'Hi Avinash, how are you?',
+                'Hi Alex, how are you?',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
                 maxLines: 2,

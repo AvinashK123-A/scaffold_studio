@@ -159,7 +159,7 @@ class DemoAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme scheme = Theme.of(context).colorScheme;
     return Semantics(
-      label: 'Profile: Avinash',
+      label: 'Profile: Alex',
       child: CircleAvatar(
         radius: radius,
         backgroundColor: scheme.tertiary,

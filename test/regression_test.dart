@@ -72,7 +72,7 @@ void main() {
               CircleAvatar(child: Icon(Icons.person)),
               SizedBox(width: 8),
               Flexible(
-                child: Text('Avinash Reddy', overflow: TextOverflow.ellipsis),
+                child: Text('Alex Johnson', overflow: TextOverflow.ellipsis),
               ),
             ],
           ),

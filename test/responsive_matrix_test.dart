@@ -66,7 +66,7 @@ Widget _shell({
       padding: const EdgeInsets.all(16),
       children: const <Widget>[
         CommonHeaderText(
-          'Hi Avinash, how are you? This heading is long enough to wrap.',
+          'Hi Alex, how are you? This heading is long enough to wrap.',
         ),
         CommonBodyText(
           'Body text that is long enough to wrap across several lines on '
