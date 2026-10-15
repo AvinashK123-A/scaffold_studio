@@ -1,5 +1,8 @@
 # scaffold_studio
 
+[![pub package](https://img.shields.io/pub/v/scaffold_studio.svg)](https://pub.dev/packages/scaffold_studio)
+[![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
+
 Responsive, themeable building blocks for Flutter apps: an adaptive app shell,
 configurable app bars, bottom bar / rail / sidebar navigation, a typography
 system with an optional bundled Roboto font, and a small set of common
