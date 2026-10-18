@@ -272,6 +272,9 @@ void main() {
       await tester.testTextInput.receiveAction(TextInputAction.search);
       await tester.pump();
       expect(queries, <String>['tea']);
+      // Submitting removes focus, so focus the field again first.
+      await tester.tap(find.byType(TextField));
+      await tester.pump();
       await tester.testTextInput.receiveAction(TextInputAction.search);
       await tester.pump(const Duration(milliseconds: 500));
       expect(queries, <String>['tea', 'tea']);
