@@ -64,4 +64,7 @@ jobs:
 
       - name: Validate the package for pub.dev
         if: matrix.name == 'stable'
-        run: dart pub publish --dry-run
+        run: |
+          git status --short
+          git diff
+          dart pub publish --dry-run
