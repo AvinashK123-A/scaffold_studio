@@ -431,10 +431,10 @@ class CommonSearchField extends StatefulWidget {
         style?.variant ??
         themeStyle?.variant ??
         CommonSearchFieldVariant.filled;
-    return defaultStyle(theme, effectiveVariant)
-        .merge(themeStyle)
-        .merge(style)
-        .copyWith(variant: effectiveVariant);
+    return defaultStyle(
+      theme,
+      effectiveVariant,
+    ).merge(themeStyle).merge(style).copyWith(variant: effectiveVariant);
   }
 
   @override
