@@ -8,8 +8,8 @@ import 'package:scaffold_studio/scaffold_studio.dart';
 
 import '../widgets/showcase_widgets.dart';
 
-/// Demonstrates the common widgets: buttons, icon buttons, badges, cards,
-/// dividers, a responsive grid and keyboard focus.
+/// Demonstrates the common widgets: buttons, search fields, icon buttons,
+/// badges, cards, dividers, a responsive grid and keyboard focus.
 class WidgetsPage extends StatefulWidget {
   /// Creates the page.
   const WidgetsPage({super.key});
@@ -23,6 +23,25 @@ class _WidgetsPageState extends State<WidgetsPage> {
   final TextEditingController _email = TextEditingController();
   bool _loading = false;
   bool _bookmarked = false;
+  String _fruitQuery = '';
+  bool _searchingFruit = false;
+
+  static const List<String> _fruitNames = <String>[
+    'Apple',
+    'Apricot',
+    'Banana',
+    'Blueberry',
+    'Cherry',
+    'Grape',
+    'Kiwi',
+    'Lemon',
+    'Mango',
+    'Orange',
+    'Peach',
+    'Pear',
+    'Pineapple',
+    'Strawberry',
+  ];
 
   @override
   void dispose() {
@@ -38,6 +57,7 @@ class _WidgetsPageState extends State<WidgetsPage> {
     return ShowcasePage(
       children: <Widget>[
         _buttons(),
+        _searchFields(),
         _iconButtons(),
         _badges(),
         _cards(),
@@ -139,6 +159,116 @@ class _WidgetsPageState extends State<WidgetsPage> {
                 'instead of overflowing the button',
             variant: CommonButtonVariant.outlined,
             onPressed: () => _say('Long label pressed'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _searchFields() {
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    final String query = _fruitQuery.toLowerCase();
+    final List<String> matches = <String>[
+      for (final String name in _fruitNames)
+        if (name.toLowerCase().contains(query)) name,
+    ];
+    final String results = matches.isEmpty
+        ? 'No fruit matches "$_fruitQuery".'
+        : matches.join(', ');
+
+    return ShowcaseSection(
+      title: 'CommonSearchField',
+      description:
+          'A search field where every detail can be customized: variant, text '
+          'and hint style, font, cursor, fill, border width, color and radius '
+          'for each state, shadows, icons, clear button, loading indicator and '
+          'a debounced search callback.',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 12,
+        children: <Widget>[
+          const CommonLabelText('Variants'),
+          for (final CommonSearchFieldVariant variant
+              in CommonSearchFieldVariant.values)
+            CommonSearchField(
+              variant: variant,
+              hintText: '${_capitalize(variant.name)} search field',
+            ),
+          const CommonLabelText('Debounced search with a loading indicator'),
+          CommonSearchField(
+            hintText: 'Search fruit',
+            isLoading: _searchingFruit,
+            onChanged: (String value) {
+              if (!_searchingFruit) {
+                setState(() => _searchingFruit = true);
+              }
+            },
+            onSearch: (String value) {
+              setState(() {
+                _fruitQuery = value;
+                _searchingFruit = false;
+              });
+            },
+          ),
+          CommonBodyText(results),
+          const CommonLabelText('Fully custom style'),
+          CommonSearchField(
+            hintText: 'Search the help center',
+            style: CommonSearchFieldStyle(
+              height: 52,
+              font: StudioFont.roboto,
+              textStyle: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+              hintStyle: TextStyle(
+                fontSize: 15,
+                color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
+              ),
+              backgroundColor: scheme.surface,
+              focusedBackgroundColor: scheme.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(14)),
+              borderWidth: 1,
+              focusedBorderWidth: 2,
+              borderColor: scheme.outlineVariant,
+              hoverBorderColor: scheme.outline,
+              focusedBorderColor: scheme.tertiary,
+              shadows: <BoxShadow>[
+                BoxShadow(
+                  color: scheme.shadow.withValues(alpha: 0.08),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+              focusedShadows: <BoxShadow>[
+                BoxShadow(
+                  color: scheme.tertiary.withValues(alpha: 0.25),
+                  blurRadius: 16,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+              prefixIcon: Icons.help_outline,
+              focusedPrefixIconColor: scheme.tertiary,
+              cursorColor: scheme.tertiary,
+              selectionColor: scheme.tertiary.withValues(alpha: 0.3),
+              clearIcon: Icons.cancel,
+              clearIconColor: scheme.tertiary,
+            ),
+            trailing: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.mic_none),
+                tooltip: 'Voice search',
+                onPressed: () => _say('Voice search'),
+              ),
+            ],
+            onSubmitted: (String value) => _say('Searching for "$value"'),
+          ),
+          const CommonLabelText('Disabled and read-only'),
+          const CommonSearchField(enabled: false, initialValue: 'Disabled'),
+          CommonSearchField(
+            readOnly: true,
+            hintText: 'Read-only: tap to open a search page',
+            onTap: () => _say('Open a search page'),
           ),
         ],
       ),
