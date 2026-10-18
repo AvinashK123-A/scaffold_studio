@@ -1,0 +1,36 @@
+# Publishes the package to pub.dev when a version tag such as v0.2.0 is
+# pushed. Authentication uses GitHub's OIDC token, so no secrets are stored.
+#
+# One-time setup on pub.dev: open the package's Admin tab, enable
+# "Automated publishing" from GitHub Actions, enter the repository
+# AvinashK123-A/scaffold_studio and the tag pattern v{{version}}.
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required to authenticate with pub.dev.
+    steps:
+      - uses: actions/checkout@v4
+
+      # Configures the pub.dev token from the GitHub OIDC credentials.
+      - uses: dart-lang/setup-dart@v1
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Test
+        run: flutter test
+
+      - name: Publish
+        run: dart pub publish --force
