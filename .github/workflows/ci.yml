@@ -9,20 +9,24 @@ on:
 
 jobs:
   check:
-    name: Analyze and test (Flutter ${{ matrix.flutter }})
+    name: Analyze and test (Flutter ${{ matrix.name }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        # The newest stable release and the minimum supported version.
-        flutter: [stable, 3.38.0]
+        # The newest stable release and the minimum supported minor version.
+        include:
+          - name: stable
+            version: ''
+          - name: '3.38'
+            version: '3.38.x'
     steps:
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: ${{ matrix.flutter == 'stable' && '' || matrix.flutter }}
+          flutter-version: ${{ matrix.version }}
           cache: true
 
       - run: flutter --version
@@ -31,13 +35,13 @@ jobs:
         run: flutter pub get
 
       - name: Check formatting
-        if: matrix.flutter == 'stable'
+        if: matrix.name == 'stable'
         run: |
           dart format lib test example/lib example/test example/integration_test
           git diff --exit-code
 
       - name: Analyze
-        if: matrix.flutter == 'stable'
+        if: matrix.name == 'stable'
         run: flutter analyze
 
       - name: Test
@@ -47,9 +51,9 @@ jobs:
         working-directory: example
         run: |
           flutter pub get
-          if [ "${{ matrix.flutter }}" = "stable" ]; then flutter analyze; fi
+          if [ "${{ matrix.name }}" = "stable" ]; then flutter analyze; fi
           flutter test
 
       - name: Validate the package for pub.dev
-        if: matrix.flutter == 'stable'
+        if: matrix.name == 'stable'
         run: dart pub publish --dry-run
