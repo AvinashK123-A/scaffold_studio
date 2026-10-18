@@ -23,7 +23,7 @@
 ///   `StudioResponsiveBuilder`.
 /// * Common widgets: `CommonHeaderText`, `CommonBodyText`, `CommonLabelText`,
 ///   `CommonButton`, `CommonIconButton`, `CommonBadge`, `CommonCard`,
-///   `CommonDivider`.
+///   `CommonDivider`, `CommonSearchField`, `CommonSearchFieldStyle`.
 library;
 
 export 'src/app/scaffold_studio_app.dart';
@@ -53,4 +53,6 @@ export 'src/widgets/common_divider.dart';
 export 'src/widgets/common_header_text.dart';
 export 'src/widgets/common_icon_button.dart';
 export 'src/widgets/common_label_text.dart';
+export 'src/widgets/common_search_field.dart';
+export 'src/widgets/common_search_field_style.dart';
 export 'src/widgets/common_text.dart';

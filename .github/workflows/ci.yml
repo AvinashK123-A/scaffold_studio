@@ -1,0 +1,70 @@
+# Checks every pull request and every push to main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Analyze and test (Flutter ${{ matrix.name }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The newest stable release and the minimum supported minor version.
+        include:
+          - name: stable
+            version: ''
+          - name: '3.38'
+            version: '3.38.x'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ matrix.version }}
+          cache: true
+
+      - run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check formatting
+        if: matrix.name == 'stable'
+        run: |
+          dart format lib test example/lib example/test example/integration_test
+          git diff --exit-code -- '*.dart'
+
+      - name: Analyze
+        if: matrix.name == 'stable'
+        run: flutter analyze
+
+      - name: Test
+        if: matrix.name == 'stable'
+        run: flutter test
+
+      # Some older suites use matchers that are newer than Flutter 3.38, so
+      # the minimum version runs the suites that support it.
+      - name: Test on the minimum version
+        if: matrix.name != 'stable'
+        run: flutter test test/common_search_field_test.dart
+
+      - name: Analyze and test the example
+        if: matrix.name == 'stable'
+        working-directory: example
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+
+      - name: Validate the package for pub.dev
+        if: matrix.name == 'stable'
+        run: |
+          git status --short
+          git diff
+          dart pub publish --dry-run

@@ -1,3 +1,17 @@
+## 0.2.0
+
+- New `CommonSearchField`: a search text field built on `TextField` with
+  four variants (`filled`, `outlined`, `underlined`, `plain`), a debounced
+  `onSearch` callback (`searchDebounce`, `minSearchLength`,
+  `trimSearchQuery`), a clear button with four visibility modes and a custom
+  builder, Escape-to-clear, a loading indicator, a custom prefix and
+  trailing widgets, read-only and disabled states, and pass-through of the
+  usual `TextField` input options.
+- New `CommonSearchFieldStyle`: controls every visual detail of the search
+  field (size, text and hint style, font, cursor, selection colors, fill and
+  border per interaction state, border radius and width, shadows, icons and
+  loading indicator). It is also a `ThemeExtension` for app-wide defaults.
+
 ## 0.1.0
 
 Initial release.

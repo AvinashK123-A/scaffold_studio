@@ -15,7 +15,7 @@ install and no font assets or configuration files to copy.
 import 'package:scaffold_studio/scaffold_studio.dart';
 ```
 
-> **Status:** `0.1.0`, pre-release. The API may still change before `1.0.0`.
+> **Status:** `0.2.0`, pre-release. The API may still change before `1.0.0`.
 
 ## Contents
 
@@ -26,6 +26,7 @@ import 'package:scaffold_studio/scaffold_studio.dart';
 - [App bars](#app-bars)
 - [Typography and fonts](#typography-and-fonts)
 - [Common widgets](#common-widgets)
+- [Search field](#search-field)
 - [Theming](#theming)
 - [Responsive behavior](#responsive-behavior)
 - [Accessibility](#accessibility)
@@ -43,7 +44,7 @@ import 'package:scaffold_studio/scaffold_studio.dart';
 | `StudioBottomBar` | A bottom bar with 7 styles: material, floating, rounded, minimal, labeled, animated and notched (FAB). Badges, custom colors, backgrounds, indicators and item builders work with every style. |
 | `StudioNavigationRail`, `StudioSidebar` | A rail and a sidebar/drawer driven by the same `StudioNavItem`s. |
 | `StudioFont`, `StudioTypography` | An app-wide font (system, bundled Roboto or your own) and per-role text styles. |
-| Common widgets | `CommonHeaderText`, `CommonBodyText`, `CommonLabelText` (each with a link mode), `CommonButton`, `CommonIconButton`, `CommonBadge`, `CommonCard`, `CommonDivider`. |
+| Common widgets | `CommonHeaderText`, `CommonBodyText`, `CommonLabelText` (each with a link mode), `CommonButton`, `CommonIconButton`, `CommonBadge`, `CommonCard`, `CommonDivider`, `CommonSearchField`. |
 | Responsive utilities | `StudioBreakpoints`, `StudioWindowSize`, `StudioResponsiveBuilder`. |
 
 Every widget also works on its own inside a plain `MaterialApp` and `Scaffold`.
@@ -54,7 +55,7 @@ the Flutter SDK.
 
 ```yaml
 dependencies:
-  scaffold_studio: ^0.1.0
+  scaffold_studio: ^0.2.0
 ```
 
 Then run `flutter pub get`.
@@ -336,6 +337,104 @@ Link behavior:
 | `CommonBadge` | `Badge` | `count` with `maxCount` (`99+`), `label`, dot, `showZero`, `semanticsLabel` |
 | `CommonCard` | `Card`, `Card.filled`, `Card.outlined` | Padding, `onTap` with ink ripple and focus, `borderRadius` |
 | `CommonDivider` | `Divider`, `VerticalDivider` | An optional centered `label` (for example "OR") that wraps instead of overflowing |
+| `CommonSearchField` | `TextField` | Four variants, a debounced `onSearch`, clear button, loading indicator, trailing widgets and a `CommonSearchFieldStyle` that controls every visual detail. See [Search field](#search-field). |
+
+## Search field
+
+`CommonSearchField` is a search box built on Material's `TextField`, so
+editing, selection, input methods and screen readers behave like any Flutter
+text field. Every visual detail is configurable.
+
+```dart
+CommonSearchField(
+  hintText: 'Search products',
+  onSearch: (String query) => repository.search(query), // debounced
+)
+```
+
+### Behavior
+
+| Parameter | What it does |
+| --- | --- |
+| `onChanged` | Called on every edit with the raw text. |
+| `onSearch` | Called once typing pauses for `searchDebounce` (300 ms by default), and immediately on submit or clear. Trimmed when `trimSearchQuery` is `true`; non-empty queries shorter than `minSearchLength` are skipped; repeated queries are not reported twice. |
+| `onSubmitted`, `onCleared`, `onTap`, `onTapOutside`, `onFocusChange` | The usual events. |
+| `controller`, `focusNode`, `initialValue` | Bring your own, or let the field create and dispose them. |
+| `isLoading`, `loadingLabel` | Shows a progress indicator at the end of the field. |
+| `clearButtonMode` | `never`, `whenNotEmpty` (default), `whenFocusedAndNotEmpty` or `always`. Use `clearButtonBuilder` for a custom button and `clearTooltip` to localize. |
+| `clearOnEscape` | Escape on a hardware keyboard clears a non-empty field. |
+| `prefix`, `showPrefixIcon`, `trailing` | Replace or hide the search icon; add buttons such as voice or filters. |
+| `enabled`, `readOnly`, `autofocus` | A read-only field with `onTap` makes a good entry point to a separate search page. |
+| `keyboardType`, `textInputAction`, `textCapitalization`, `textAlign`, `textDirection`, `autocorrect`, `enableSuggestions`, `inputFormatters`, `maxLength`, `keyboardAppearance`, `autofillHints`, `contextMenuBuilder`, `mouseCursor` | Passed to the `TextField`. |
+| `decorationBuilder` | Last-chance access to the final `InputDecoration`, for anything not covered by the style. |
+
+### Style
+
+Pick a `variant` (`filled`, `outlined`, `underlined` or `plain`) and override
+any value with `CommonSearchFieldStyle`. Unset values fall back to the theme
+and then to the variant defaults.
+
+```dart
+CommonSearchField(
+  variant: CommonSearchFieldVariant.outlined,
+  style: CommonSearchFieldStyle(
+    height: 44,
+    maxWidth: 480,
+    font: StudioFont.roboto,
+    textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+    hintStyle: const TextStyle(color: Color(0xFF98A2B3)),
+    cursorColor: Colors.deepPurple,
+    backgroundColor: Colors.white,
+    borderRadius: const BorderRadius.all(Radius.circular(10)),
+    borderWidth: 1,
+    focusedBorderWidth: 2,
+    borderColor: const Color(0xFFD0D5DD),
+    hoverBorderColor: const Color(0xFF98A2B3),
+    focusedBorderColor: Colors.deepPurple,
+    shadows: const <BoxShadow>[
+      BoxShadow(color: Color(0x14000000), blurRadius: 12, offset: Offset(0, 4)),
+    ],
+    prefixIcon: Icons.manage_search,
+    focusedPrefixIconColor: Colors.deepPurple,
+    clearIcon: Icons.cancel,
+  ),
+)
+```
+
+| Group | Properties |
+| --- | --- |
+| Size | `height` (minimum; grows with large text), `width`, `maxWidth`, `contentPadding` |
+| Text | `textStyle`, `hintStyle`, `font`, `cursorColor`, `cursorWidth`, `cursorHeight`, `cursorRadius`, `selectionColor`, `selectionHandleColor` |
+| Fill | `backgroundColor`, `hoverBackgroundColor`, `focusedBackgroundColor`, `disabledBackgroundColor` |
+| Border | `borderRadius`, `borderWidth`, `focusedBorderWidth`, `borderColor`, `hoverBorderColor`, `focusedBorderColor`, `disabledBorderColor` |
+| Shadow | `shadows`, `focusedShadows` |
+| Icons | `prefixIcon`, `prefixIconSize`, `prefixIconColor`, `focusedPrefixIconColor`, `prefixIconConstraints`, `clearIcon`, `clearIconSize`, `clearIconColor`, `clearButtonStyle`, `suffixIconColor`, `suffixIconSize` |
+| Loading | `loadingIndicatorColor`, `loadingIndicatorSize`, `loadingIndicatorStrokeWidth` |
+| Motion | `animationDuration`, `animationCurve` |
+
+`CommonSearchFieldStyle` is a `ThemeExtension`, so you can set app-wide
+defaults once:
+
+```dart
+ScaffoldStudioApp(
+  themeOverride: (ThemeData theme) => theme.copyWith(
+    extensions: <ThemeExtension<dynamic>>[
+      ...theme.extensions.values,
+      const CommonSearchFieldStyle(
+        variant: CommonSearchFieldVariant.outlined,
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+    ],
+  ),
+  home: const HomePage(),
+)
+```
+
+`CommonSearchField.defaultStyle(theme, variant)` returns the complete default
+style, a handy starting point for `copyWith`. The field sets every border
+slot itself, so an app-wide `InputDecorationTheme` does not change it. In a
+place with unbounded width, such as directly in a `Row`, it falls back to a
+width of 360 instead of throwing; wrap it in `Expanded` to fill the row.
 
 ## Theming
 

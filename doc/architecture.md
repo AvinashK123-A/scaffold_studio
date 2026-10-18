@@ -16,7 +16,7 @@ ScaffoldStudio            Scaffold composition, adaptive decisions
   │    ├─ StudioNavigationRail  (NavigationRail)
   │    └─ StudioSidebar         (NavigationDrawer)
   └─ body                 developer content
-Common* widgets           thin layers over Text and Material buttons/cards
+Common* widgets           thin layers over Text, TextField and Material buttons/cards
 ```
 
 Each layer can be used without the ones above it. Every widget reads its
